@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://unpkg.com/konva@9.3.6/konva.min.js"></script>
+        <meta charset="utf-8" />
+        <title>Konva Border Image Demo</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #f0f0f0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="container"></div>
+        <canvas width="400" height="300"></canvas>
+        <script>
+            let canvas = document.querySelector('canvas'),
+                ctx = canvas.getContext('2d'),
+                img = new Image()
+
+            img.onload = draw
+            img.src = 'img/paddleRed.png'
+
+            function draw() {
+                ctx.drawImage(img, 200, 200)
+                const imgData = ctx.getImageData(
+                    200,
+                    200,
+                    img.width,
+                    img.height
+                )
+                const data = imgData.data
+
+                log('data', data)
+
+                const len = data.length
+                const w = img.width,
+                    h = img.height
+                const x = 200,
+                    y = 200
+                const points = []
+
+                for (let i = 0; i < h; i++) {
+                    for (let j = 0; j < w; j++) {
+                        const pixelIndex = i * h + j
+                        const alpha = data[pixelIndex * 4 + 3]
+
+                        if (alpha < 250) continue
+                        if (i == h - 1 || j == w - 1 || i == 0 || j == 0) {
+                            points.push([x + j, y + i])
+                        }
+                    }
+                }
+
+                log('points', points)
+                for (const p of points) {
+                    drawPoint(p)
+                }
+            }
+
+            function drawPoint(point) {
+                ctx.fillStyle = 'green'
+
+                ctx.fillRect(...point, 2, 2)
+            }
+        </script>
+    </body>
+</html>

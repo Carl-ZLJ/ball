@@ -6,10 +6,11 @@ class Game {
         this.runCallback = runCallback
         this.images = images
         this.fps = fps
+        this.debug = false
 
         this.initCanvas()
         this.bindEvents()
-        this.init()
+        this.loadImages()
     }
 
     initCanvas() {
@@ -36,8 +37,29 @@ class Game {
         this.actions[key] = callback
     }
 
-    drawImage(pic) {
-        this.context.drawImage(pic.image, pic.x, pic.y)
+    drawElement(element) {
+        this.context.drawImage(element.image, element.x, element.y)
+    }
+
+    drawText(text, x, y, size = 20, color = 'red') {
+        const { context } = this
+        context.font = `${size}px serif`
+        context.fillStyle = color
+        context.textAlign = 'center'
+        context.textBaseline = 'bottom'
+        context.fillText(text, x, y)
+    }
+
+    drawPoints(points) {
+        this.context.save()
+        this.context.fillStyle = 'red'
+        for (let i = 0; i < points.length; i++) {
+            const p = points[i]
+            this.context.beginPath()
+            this.context.arc(...p, 2, 0, Math.PI * 2)
+            this.context.fill()
+        }
+        this.context.restore()
     }
 
     draw() {
@@ -45,11 +67,12 @@ class Game {
     }
 
     update() {
+        if (this.debug) return
         this.scene.update()
     }
 
     runloop() {
-        // events
+        // run events
         let actions = Object.keys(this.actions)
         for (let i = 0; i < actions.length; i++) {
             let key = actions[i]
@@ -84,11 +107,11 @@ class Game {
         const names = Object.keys(this.images)
         for (let i = 0; i < names.length; i++) {
             const name = names[i]
-            const path = this.images[name]
+            const path = this.images[name].path
             const img = new Image()
             img.src = path
             img.onload = () => {
-                this.images[name] = img
+                this.images[name].img = img
                 loaded.push(1)
                 if (loaded.length == names.length) {
                     this.__start()
@@ -98,18 +121,15 @@ class Game {
     }
 
     imageByName(name) {
-        const img = this.images[name]
+        const { img, points } = this.images[name]
         const image = {
             image: img,
+            points: points,
             w: img.width,
             h: img.height,
         }
 
         return image
-    }
-
-    init() {
-        this.loadImages()
     }
 
     replaceScene(scene) {

@@ -4,6 +4,13 @@
         <meta charset="UTF-8" />
         <title>hit the block</title>
         <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                min-height: 100vh;
+            }
             canvas {
                 border: 5px black solid;
             }
@@ -11,15 +18,58 @@
     </head>
     <body>
         <canvas id="id-canvas" width="800" height="600"></canvas>
+        <div>
+            <label for="id-fps">FPS</label>
+            <input type="range" id="id-fps" min="1" value="50"/>
+        </div>
         <!-- game -->
         <script src="./game/utils.js"></script>
         <script src="./game/game.js"></script>
+        <script src="./game/game_scene.js"></script>
         <!-- scene -->
         <script src="./scene/main/ball.js"></script>
-        <script src="./scene/main/block.js"></script>
         <script src="./scene/main/paddle.js"></script>
+        <script src="./scene/main/brick.js"></script>
         <script src="./scene/main/scene.js"></script>
+        <script src="./scene/end/scene.js"></script>
         <!-- main -->
         <script src="./main.js"></script>
+
+        <script>
+            // image outline
+            function imageOutlinePoints() {
+                const smallCanvas = document.querySelector('#id-canvas'),
+                    smallCtx = smallCanvas.getContext('2d')
+
+                let start = false
+                let points = []
+                document.addEventListener('keydown', (event) => {
+                    let key = event.key
+
+                    if (key == 's') {
+                        log('start to record')
+                        start = true
+                    }
+                })
+
+                smallCanvas.addEventListener('click', (event) => {
+                    if (start) {
+                        const x = event.offsetX
+                        const y = event.offsetY
+                        log('xy', x, y)
+                        points.push([x, y])
+                    }
+                })
+                document.addEventListener('keyup', (event) => {
+                    let key = event.key
+
+                    if (key == 'e') {
+                        log('start to record')
+                        start = false
+                        log('points', points)
+                    }
+                })
+            }
+        </script>
     </body>
 </html>
