@@ -41,13 +41,57 @@ class Game {
         this.context.drawImage(element.image, element.x, element.y)
     }
 
-    drawText(text, x, y, size = 20, color = 'red') {
+    drawText(str) {
         const { context } = this
-        context.font = `${size}px serif`
-        context.fillStyle = color
-        context.textAlign = 'center'
-        context.textBaseline = 'bottom'
-        context.fillText(text, x, y)
+        // an array of text objects which contains
+        // x, y, font, size, fillStyle, textAlign, textBaseline config
+        const defaultConfig = {
+            x: 0,
+            y: 0,
+            color: 'black',
+            font: 'serif',
+            type: '',
+            size: 24,
+            textAlign: 'center',
+            textBaseline: 'top',
+        }
+        const {x, y, contents, ...config} = {
+            ...defaultConfig,
+            ...str,
+        }
+
+        let textWidths = []
+        for (const c of contents) {
+            const style = {
+                ...config,
+                ...c,
+            }
+            context.font = `${style.type} ${style.size}px ${style.font}`
+            context.fillStyle = style.color
+            context.textAlign = style.textAlign
+            context.textBaseline = style.textBaseline
+            const { width } = context.measureText(style.text)
+            textWidths.push(width)
+        }
+
+        const totalWidth = textWidths.reduce((cur, acc) => acc + cur, 0)
+        let curX = x - totalWidth / 2
+        let curY = y
+        for (let i = 0; i < contents.length; i++) {
+            const c = contents[i]
+            const style = {
+                ...config,
+                ...c,
+            }
+            context.font = `${style.type} ${style.size}px ${style.font}`
+            log(c.text, context.font)
+            context.fillStyle = style.color
+            context.textAlign = 'left'
+            context.fillText(c.text, curX, curY)
+
+            const w = textWidths[i]
+            curX += w
+        }
     }
 
     drawPoints(points) {

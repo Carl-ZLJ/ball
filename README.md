@@ -7,13 +7,19 @@ Destory the bricks by hitting them with the balls
 -   game folder
     -   provides basic facilities
         -   [x] **load images**
-        -   [x] **bind keystrokes**
+            -   image's outline
+        -   [ ] **drawing capabilities**
+            -   [x] draw Image
+            -   [ ] draw Text
+            -   [x] draw Points
+        -   [x] **bind keys**
         -   [x] **change scenes**
+            -   main scene
+            -   end scene
+            -   start scene
         -   [ ] load audios
-        -   [x] image's outline points
         -   [ ] level editor
-        - [x] Debug Mode
-            - [x] Pause option
+        -   [x] Debug Mode
+            -   [x] Pause option
 -   scene folder
     -   manage different game scenes
-
