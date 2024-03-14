@@ -8,9 +8,9 @@ Destory the bricks by hitting them with the balls
     -   provides basic facilities
         -   [x] **load images**
             -   image's outline
-        -   [ ] **drawing capabilities**
+        -   [x] **drawing capabilities**
             -   [x] draw Image
-            -   [ ] draw Text
+            -   [x] draw Text
             -   [x] draw Points
         -   [x] **bind keys**
         -   [x] **change scenes**

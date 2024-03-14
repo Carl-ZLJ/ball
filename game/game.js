@@ -66,17 +66,25 @@ class Game {
                 ...config,
                 ...c,
             }
-            context.font = `${style.type} ${style.size}px ${style.font}`
-            context.fillStyle = style.color
-            context.textAlign = style.textAlign
-            context.textBaseline = style.textBaseline
+            setContextFont(context, style)
             const { width } = context.measureText(style.text)
             textWidths.push(width)
         }
 
         const totalWidth = textWidths.reduce((cur, acc) => acc + cur, 0)
-        let curX = x - totalWidth / 2
-        let curY = y
+
+        let curX, curY
+        if (config.textAlign == 'left') {
+            curX = x
+            curY = y
+        } else if (config.textAlign == 'center') {
+            curX = x - totalWidth / 2
+            curY = y
+        } else if (config.textAlign == 'right') {
+            curX = x - totalWidth
+            curY = y
+        }
+
         for (let i = 0; i < contents.length; i++) {
             const c = contents[i]
             const style = {
@@ -84,7 +92,6 @@ class Game {
                 ...c,
             }
             context.font = `${style.type} ${style.size}px ${style.font}`
-            log(c.text, context.font)
             context.fillStyle = style.color
             context.textAlign = 'left'
             context.fillText(c.text, curX, curY)

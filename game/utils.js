@@ -74,3 +74,10 @@ function substract(tip, tail) {
 function add(tip, tail) {
     return [tip[0] + tail[0], tip[1] + tail[1]]
 }
+
+function setContextFont(context, style) {
+    context.font = `${style.type} ${style.size}px ${style.font}`
+    context.fillStyle = style.color
+    context.textAlign = style.textAlign
+    context.textBaseline = style.textBaseline
+}
