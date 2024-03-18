@@ -1,5 +1,6 @@
 class Game {
     constructor(fps = 60, images, runCallback) {
+        // this.actions[key] = []
         this.actions = {}
         this.keydowns = {}
         this.scene = null
@@ -34,7 +35,10 @@ class Game {
     }
 
     registerAction(key, callback) {
-        this.actions[key] = callback
+        if (!this.actions[key]) {
+            this.actions[key] = []
+        }
+        this.actions[key].push(callback)
     }
 
     drawElement(element) {
@@ -43,8 +47,7 @@ class Game {
 
     drawText(str) {
         const { context } = this
-        // an array of text objects which contains
-        // x, y, font, size, fillStyle, textAlign, textBaseline config
+        // text object which contains x, y, contesnts, font, size, color, textAlign, textBaseline config
         const defaultConfig = {
             x: 0,
             y: 0,
@@ -53,7 +56,7 @@ class Game {
             type: '',
             size: 24,
             textAlign: 'center',
-            textBaseline: 'top',
+            textBaseline: 'bottom',
         }
         const {x, y, contents, ...config} = {
             ...defaultConfig,
@@ -128,7 +131,7 @@ class Game {
         for (let i = 0; i < actions.length; i++) {
             let key = actions[i]
             if (this.keydowns[key]) {
-                this.actions[key]()
+                this.actions[key].forEach(f => f())
             }
         }
 

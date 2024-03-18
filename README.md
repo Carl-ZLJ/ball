@@ -13,13 +13,11 @@ Destory the bricks by hitting them with the balls
             -   [x] draw Text
             -   [x] draw Points
         -   [x] **bind keys**
+            -   [x] callback queue support
         -   [x] **change scenes**
-            -   main scene
-            -   end scene
-            -   start scene
-        -   [ ] load audios
-        -   [ ] level editor
-        -   [x] Debug Mode
+        -   [ ] **load audios**
+        -   [ ] **level editor**
+        -   [x] **Debug Mode**
             -   [x] Pause option
 -   scene folder
     -   manage different game scenes

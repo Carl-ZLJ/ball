@@ -6,16 +6,19 @@ class SceneEnd extends GameScene {
 
     init(game) {
         game.registerAction('r', () => {
-            const s = new SceneMain(game)
+            const s = new SceneStart(game)
             game.replaceScene(s)
         })
     }
 
     draw() {
+        super.draw()
+        const x = this.game.w / 2
+        const y = this.game.h / 2
         this.game.drawText({
             font: 'Iosevka Nerd Font',
-            x: 400,
-            y: 300,
+            x: x,
+            y: y,
             textAlign: 'center',
             color: 'red',
             contents: [
@@ -39,8 +42,8 @@ class SceneEnd extends GameScene {
             ],
         })
         this.game.drawText({
-            x: 400,
-            y: 350,
+            x: x,
+            y: y + 50,
             color: 'red',
             contents: [{
                 text: 'Happy Gaming',

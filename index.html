@@ -17,10 +17,13 @@
         </style>
     </head>
     <body>
-        <canvas id="id-canvas" width="800" height="600"></canvas>
+        <canvas id="id-canvas" width="640" height="640"></canvas>
         <div>
             <label for="id-fps">FPS</label>
             <input type="range" id="id-fps" min="1" value="50"/>
+        </div>
+        <div>
+            <img src="img/element_purple_rectangle.png" alt="purple rectangle">
         </div>
         <!-- game -->
         <script src="./game/utils.js"></script>
@@ -31,6 +34,7 @@
         <script src="./scene/main/paddle.js"></script>
         <script src="./scene/main/brick.js"></script>
         <script src="./scene/main/scene.js"></script>
+        <script src="./scene/start/scene.js"></script>
         <script src="./scene/end/scene.js"></script>
         <!-- main -->
         <script src="./main.js"></script>

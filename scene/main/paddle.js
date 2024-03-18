@@ -49,8 +49,6 @@ class Paddle {
 
         for (let i = 0; i < this.segments.length; i++) {
             const p = this.segments[i]
-            // TODO: Which area is the collide point in? LEFT and RIGHT side 
-            // TODO: of the paddle are SPECIAL
             for (let j = 0; j < ball.segments.length; j++) {
                 const b = ball.segments[j]
                 if (calcIntersection(p[0], p[1], b[0], b[1])) {
